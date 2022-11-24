@@ -193,7 +193,12 @@ class Cat {
       catActivities[random.nextInt(catActivities.length)],
       catActivities[random.nextInt(catActivities.length)]
     ];
-    return Cat(imageBuffer: imageBuffer, name: name, personality: personality, dislikedActivities: dislikedActivities, favouriteActivities: favouriteActivities);
+    return Cat(
+        imageBuffer: imageBuffer,
+        name: name,
+        personality: personality,
+        dislikedActivities: dislikedActivities,
+        favouriteActivities: favouriteActivities);
   }
 }
 
