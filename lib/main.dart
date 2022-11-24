@@ -46,6 +46,12 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
+extension StringExtension on String {
+  String capitalize() {
+    return "${this[0].toUpperCase()}${substring(1).toLowerCase()}";
+  }
+}
+
 class _MyHomePageState extends State<MyHomePage> {
   late Future<Cat> futureCat;
 
@@ -76,68 +82,95 @@ class _MyHomePageState extends State<MyHomePage> {
               appBar: AppBar(
                 // Here we take the value from the MyHomePage object that was created by
                 // the App.build method, and use it to set our appbar title.
-                title: Text(snapshot.data!.name),
+                title: Text(
+                  snapshot.data!.name,
+                  textScaleFactor: 1.25,
+                ),
               ),
               floatingActionButton: FloatingActionButton(
                 onPressed: loadNewCat,
                 tooltip: 'Generate a new Cat',
                 child: const Icon(Icons.pets),
               ),
-              body: SingleChildScrollView(child: Padding(
-                  padding: const EdgeInsets.fromLTRB(12.0, 12.0, 12.0, 80.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Card(
-                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                        child: Image.memory(snapshot.data!.imageBuffer),
-                      ),
-                      Card(
-                        child: Padding(padding: const EdgeInsets.all(16.0), child: Column(
+              body: SingleChildScrollView(
+                  child: Padding(
+                      padding:
+                          const EdgeInsets.fromLTRB(12.0, 12.0, 12.0, 80.0),
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                          Text("${snapshot.data!.name}'s Personality is", textAlign: TextAlign.left),
-                          Text(snapshot.data!.personality, textScaleFactor: 2, textAlign: TextAlign.right),
-                        ]))
-                      ),
-                      Card(
-                        child: Padding(padding: const EdgeInsets.all(16.0), child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                          Text("${snapshot.data!.name}'s Favourite activities are", textAlign: TextAlign.left),
-                          ...snapshot.data!.favouriteActivities.map((a) => Text(a, textScaleFactor: 2, textAlign: TextAlign.right))
-                        ]))
-                      ),
-                      Card(
-                        child: Padding(padding: const EdgeInsets.all(16.0), child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                          Text("${snapshot.data!.name}'s Disliked activities are", textAlign: TextAlign.left),
-                          ...snapshot.data!.dislikedActivities.map((a) => Text(a, textScaleFactor: 2, textAlign: TextAlign.right))
-                        ]))
-                      ),
-                    ],
-                  ))));
+                        children: [
+                          Card(
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            child: Image.memory(snapshot.data!.imageBuffer),
+                          ),
+                          Card(
+                              child: Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: [
+                                        Text(
+                                            "${snapshot.data!.name}'s Personality is",
+                                            textAlign: TextAlign.left),
+                                        Text(
+                                            snapshot.data!.personality
+                                                .capitalize(),
+                                            textScaleFactor: 1.25,
+                                            textAlign: TextAlign.right),
+                                      ]))),
+                          Card(
+                              child: Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: [
+                                        Text(
+                                            "${snapshot.data!.name}'s Favourite activities are",
+                                            textAlign: TextAlign.left),
+                                        ...snapshot.data!.favouriteActivities
+                                            .map((a) => Text(a.capitalize(),
+                                                textScaleFactor: 1.25,
+                                                textAlign: TextAlign.right))
+                                      ]))),
+                          Card(
+                              child: Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: [
+                                        Text(
+                                            "${snapshot.data!.name}'s Disliked activities are",
+                                            textAlign: TextAlign.left),
+                                        ...snapshot.data!.dislikedActivities
+                                            .map((a) => Text(a.capitalize(),
+                                                textScaleFactor: 1.25,
+                                                textAlign: TextAlign.right))
+                                      ]))),
+                        ],
+                      ))));
         }
 
         return Scaffold(
-            appBar: AppBar(
+          appBar: AppBar(
               // Here we take the value from the MyHomePage object that was created by
               // the App.build method, and use it to set our appbar title.
-            ),
-            body: Center(
-                child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                CircularProgressIndicator(),
-              ],
-            )),
-            floatingActionButton: FloatingActionButton(
-              onPressed: loadNewCat,
-              tooltip: 'Generate a new Cat',
-              child: const Icon(Icons.pets),
-            ),
-          );
+              ),
+          body: Center(
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              CircularProgressIndicator(),
+            ],
+          )),
+          floatingActionButton: FloatingActionButton(
+            onPressed: loadNewCat,
+            tooltip: 'Generate a new Cat',
+            child: const Icon(Icons.pets),
+          ),
+        );
       },
     ); // This trailing comma makes auto-formatting nicer for build methods.
   }
